@@ -5,12 +5,12 @@ import { useState } from 'react';
 const cropData = [
   { 
     id: 1, name: 'Mango', emoji: '🥭', variety: 'Carabao', price: 53, trend: 'up', change: '+₱15', category: 'Fruits',
-    history: [50, 52, 51, 53, 55, 54, 56, 55, 57, 58, 56, 55, 54, 53, 52, 51, 50, 52, 53, 54, 55, 56, 57, 58, 59, 60, 59, 58, 57, 53],
-    stats: { highest: 60, lowest: 50, demand: 'High' }
+    history: [52, 53, 55, 54, 56, 58, 57, 55, 53, 52, 54, 56, 58, 60, 59, 57, 55, 54, 56, 58, 57, 55, 54, 56, 58, 59, 57, 56, 54, 53],
+    stats: { highest: 60, lowest: 52, demand: 'High' }
   },
   { 
     id: 2, name: 'Tomato', emoji: '🍅', variety: 'Native', price: 28, trend: 'down', change: '-₱2', category: 'Vegetables',
-    history: [30, 31, 32, 33, 34, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 26, 27, 28, 29, 30, 31, 32, 31, 30, 29, 30, 31, 30, 28],
+    history: [30, 31, 33, 35, 34, 32, 30, 28, 27, 26, 25, 26, 28, 30, 31, 32, 31, 29, 28, 27, 26, 25, 26, 27, 28, 29, 30, 31, 30, 28],
     stats: { highest: 35, lowest: 25, demand: 'Medium' }
   },
   { 
@@ -25,7 +25,7 @@ const cropData = [
   },
   { 
     id: 5, name: 'Onion', emoji: '🧅', variety: 'Red', price: 45, trend: 'up', change: '+₱5', category: 'Vegetables',
-    history: [35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 36, 37, 38, 39, 40, 42, 45],
+    history: [35, 36, 38, 40, 42, 44, 46, 48, 47, 45, 43, 41, 39, 37, 36, 38, 40, 42, 44, 46, 45, 43, 41, 39, 38, 40, 42, 44, 45, 45],
     stats: { highest: 48, lowest: 35, demand: 'High' }
   },
   { 
@@ -111,23 +111,44 @@ export default function PricesScreen({ setActiveScreen }) {
               </div>
             </div>
             
-            {/* Simple Bar Chart */}
-            <div className="h-40 flex items-end justify-between gap-1 pt-4">
-              {historyData.map((val, idx) => (
-                <div key={idx} className="flex-1 flex flex-col items-center gap-2 group">
-                  <div 
-                    className={`w-full rounded-t-[2px] transition-all duration-500 ${
-                      idx === historyData.length - 1 ? 'bg-primary shadow-[0_0_12px_rgba(45,106,79,0.3)]' : 'bg-primary/20'
-                    }`}
-                    style={{ height: `${(val / maxVal) * 100}%` }}
-                  ></div>
-                  {timeRange === '7d' && (
-                    <span className={`text-[8px] font-bold ${idx === historyData.length - 1 ? 'text-primary' : 'text-light'}`}>
-                      D{idx + 1}
-                    </span>
-                  )}
-                </div>
-              ))}
+            {/* Simple Bar Chart with Line Overlay */}
+            <div className="h-40 relative pt-4">
+              {/* SVG Line Overlay */}
+              <svg 
+                className="absolute inset-x-0 bottom-[34px] w-full h-[126px] pointer-events-none z-10" 
+                preserveAspectRatio="none"
+                viewBox={`0 0 ${historyData.length - 1} 100`}
+              >
+                <path
+                  d={historyData.map((val, i) => 
+                    `${i === 0 ? 'M' : 'L'} ${i} ${100 - (val / maxVal) * 100}`
+                  ).join(' ')}
+                  fill="none"
+                  stroke="#2D6A4F"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="drop-shadow-sm"
+                />
+              </svg>
+
+              <div className="h-full flex items-end justify-between gap-1">
+                {historyData.map((val, idx) => (
+                  <div key={idx} className="flex-1 flex flex-col items-center gap-2 group relative">
+                    <div 
+                      className={`w-full rounded-t-[2px] transition-all duration-500 ${
+                        idx === historyData.length - 1 ? 'bg-primary/40 shadow-[0_0_12px_rgba(45,106,79,0.2)]' : 'bg-primary/10'
+                      }`}
+                      style={{ height: `${(val / maxVal) * 100}%` }}
+                    ></div>
+                    {timeRange === '7d' && (
+                      <span className={`text-[8px] font-bold ${idx === historyData.length - 1 ? 'text-primary' : 'text-light'}`}>
+                        D{idx + 1}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
             {timeRange === '30d' && (
               <div className="flex justify-between text-[8px] font-bold text-light px-1">

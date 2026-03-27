@@ -152,20 +152,20 @@ export default function PricesScreen({ setActiveScreen }) {
     );
   }
 
-      {/* Filter Pills */}
-      <div className="flex overflow-x-auto no-scrollbar gap-2 px-4 py-3 bg-bg sticky top-14 z-10 border-b border-border">
-        {filters.map(f => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            className={`px-6 py-2 rounded-full text-sm font-bold whitespace-nowrap transition-colors ${
-              filter === f ? 'bg-primary text-white shadow-sm' : 'bg-white border border-border text-mid active:bg-gray-50'
-            }`}
-          >
-            {f}
-          </button>
-        ))}
-      </div>
+  return (
+    <div className="flex flex-col h-full bg-bg">
+      {/* Header */}
+      <header className="h-14 bg-primary flex items-center px-4 sticky top-0 z-10 shadow-sm">
+        <button onClick={() => setActiveScreen('home')} className="text-white p-2 -ml-2">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <div className="flex-1 text-center">
+          <h1 className="text-white font-bold text-lg">Today's Prices — Iloilo City</h1>
+        </div>
+        <div className="w-10"></div>
+      </header>
 
       {/* Crop List */}
       <main className="flex-1 overflow-y-auto no-scrollbar p-4 space-y-3 pb-24">

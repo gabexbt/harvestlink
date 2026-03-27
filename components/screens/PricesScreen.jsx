@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 const cropData = [
-  { id: 1, name: 'Mango', emoji: '🥭', variety: 'Carabao', price: 38, trend: 'up', change: '+₱3', category: 'Fruits' },
+  { id: 1, name: 'Mango', emoji: '🥭', variety: 'Carabao', price: 53, trend: 'up', change: '+₱15', category: 'Fruits' },
   { id: 2, name: 'Tomato', emoji: '🍅', variety: 'Native', price: 28, trend: 'down', change: '-₱2', category: 'Vegetables' },
   { id: 3, name: 'Corn', emoji: '🌽', variety: 'Yellow', price: 15, trend: 'stable', change: 'no change', category: 'Grains' },
   { id: 4, name: 'Rice', emoji: '🌾', variety: 'Well-milled', price: 22, trend: 'up', change: '+₱1', category: 'Grains' },

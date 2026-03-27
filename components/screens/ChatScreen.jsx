@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 const responses = [
   {
     keywords: ["mango", "mangga"],
-    reply: "Mango prices today in Iloilo are at ₱38/kg — trending up. Best selling point is Iloilo City Public Market. Juan's Produce is buying at ₱36/kg right now, 3.2km from you."
+    reply: "Mango prices today in Iloilo are at ₱50–₱55/kg — trending up. Best selling point is Iloilo City Public Market. Juan's Produce is buying at ₱52/kg right now, 3.2km from you."
   },
   {
     keywords: ["tomato", "kamatis"],
@@ -13,7 +13,7 @@ const responses = [
   },
   {
     keywords: ["price", "presyo", "magkano", "how much"],
-    reply: "Here are today's prices in Iloilo City:\n• Mango: ₱38/kg ↑\n• Tomato: ₱28/kg ↓\n• Corn: ₱15/kg →\n• Rice: ₱22/kg ↑\n\nPrices are updated from DOST data. Want me to find buyers for a specific crop?"
+    reply: "Here are today's prices in Iloilo City:\n• Mango: ₱53/kg ↑\n• Tomato: ₱28/kg ↓\n• Corn: ₱15/kg →\n• Rice: ₱22/kg ↑\n\nPrices are updated from DOST data. Want me to find buyers for a specific crop?"
   },
   {
     keywords: ["buyer", "sell", "sino", "who"],
@@ -39,7 +39,7 @@ const responses = [
 export default function ChatScreen({ setActiveScreen }) {
   const [messages, setMessages] = useState([
     { role: 'user', content: "I have 50 kilos of mango in Iloilo. What's a fair price?" },
-    { role: 'ai', content: "Based on current market data, a fair price is ₱35–₱42 per kilo. Prices are highest right now at Iloilo City Public Market.\n\nWould you like me to find buyers near you?" }
+    { role: 'ai', content: "Based on current market data, a fair price is ₱50–₱55 per kilo. Prices are highest right now at Iloilo City Public Market.\n\nWould you like me to find buyers near you?" }
   ]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);

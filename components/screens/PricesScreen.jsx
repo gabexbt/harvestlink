@@ -5,37 +5,37 @@ import { useState } from 'react';
 const cropData = [
   { 
     id: 1, name: 'Mango', emoji: '🥭', variety: 'Carabao', price: 53, trend: 'up', change: '+₱15', category: 'Fruits',
-    history: [45, 42, 48, 50, 48, 53, 53],
-    stats: { highest: 55, lowest: 42, demand: 'High' }
+    history: [50, 52, 51, 53, 55, 54, 56, 55, 57, 58, 56, 55, 54, 53, 52, 51, 50, 52, 53, 54, 55, 56, 57, 58, 59, 60, 59, 58, 57, 53],
+    stats: { highest: 60, lowest: 50, demand: 'High' }
   },
   { 
     id: 2, name: 'Tomato', emoji: '🍅', variety: 'Native', price: 28, trend: 'down', change: '-₱2', category: 'Vegetables',
-    history: [32, 35, 33, 30, 31, 30, 28],
-    stats: { highest: 35, lowest: 28, demand: 'Medium' }
+    history: [30, 31, 32, 33, 34, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 26, 27, 28, 29, 30, 31, 32, 31, 30, 29, 30, 31, 30, 28],
+    stats: { highest: 35, lowest: 25, demand: 'Medium' }
   },
   { 
     id: 3, name: 'Corn', emoji: '🌽', variety: 'Yellow', price: 15, trend: 'stable', change: 'no change', category: 'Grains',
-    history: [14, 15, 15, 15, 14, 15, 15],
+    history: [15, 15, 16, 16, 15, 14, 14, 15, 15, 16, 16, 15, 14, 14, 15, 15, 16, 16, 15, 14, 14, 15, 15, 16, 16, 15, 14, 14, 15, 15],
     stats: { highest: 16, lowest: 14, demand: 'Medium' }
   },
   { 
     id: 4, name: 'Rice', emoji: '🌾', variety: 'Well-milled', price: 22, trend: 'up', change: '+₱1', category: 'Grains',
-    history: [20, 21, 21, 22, 21, 21, 22],
+    history: [20, 20, 21, 21, 22, 22, 21, 21, 20, 20, 21, 21, 22, 22, 21, 21, 20, 20, 21, 21, 22, 22, 21, 21, 20, 20, 21, 21, 22, 22],
     stats: { highest: 23, lowest: 20, demand: 'High' }
   },
   { 
     id: 5, name: 'Onion', emoji: '🧅', variety: 'Red', price: 45, trend: 'up', change: '+₱5', category: 'Vegetables',
-    history: [38, 40, 39, 41, 42, 40, 45],
-    stats: { highest: 48, lowest: 38, demand: 'High' }
+    history: [35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 45, 44, 43, 42, 41, 40, 39, 38, 37, 36, 35, 36, 37, 38, 39, 40, 42, 45],
+    stats: { highest: 48, lowest: 35, demand: 'High' }
   },
   { 
     id: 6, name: 'Kangkong', emoji: '🥬', variety: 'Fresh', price: 12, trend: 'down', change: '-₱1', category: 'Vegetables',
-    history: [14, 13, 14, 12, 13, 13, 12],
-    stats: { highest: 15, lowest: 12, demand: 'Low' }
+    history: [15, 14, 13, 12, 11, 10, 11, 12, 13, 14, 15, 14, 13, 12, 11, 10, 11, 12, 13, 14, 15, 14, 13, 12, 11, 10, 11, 12, 13, 12],
+    stats: { highest: 15, lowest: 10, demand: 'Low' }
   },
   { 
     id: 7, name: 'Banana', emoji: '🍌', variety: 'Saba', price: 18, trend: 'stable', change: 'no change', category: 'Fruits',
-    history: [18, 17, 18, 18, 19, 18, 18],
+    history: [18, 18, 19, 19, 18, 17, 17, 18, 18, 19, 19, 18, 17, 17, 18, 18, 19, 19, 18, 17, 17, 18, 18, 19, 19, 18, 17, 17, 18, 18],
     stats: { highest: 20, lowest: 17, demand: 'Medium' }
   },
 ];
@@ -43,6 +43,7 @@ const cropData = [
 export default function PricesScreen({ setActiveScreen }) {
   const [filter, setFilter] = useState('All');
   const [selectedCrop, setSelectedCrop] = useState(null);
+  const [timeRange, setTimeRange] = useState('7d'); // '7d' or '30d'
   const filters = ['All', 'Fruits', 'Vegetables', 'Grains'];
 
   const filteredCrops = filter === 'All' 
@@ -50,7 +51,10 @@ export default function PricesScreen({ setActiveScreen }) {
     : cropData.filter(crop => crop.category === filter);
 
   if (selectedCrop) {
-    const maxVal = Math.max(...selectedCrop.history);
+    const historyData = timeRange === '7d' 
+      ? selectedCrop.history.slice(-7) 
+      : selectedCrop.history;
+    const maxVal = Math.max(...historyData);
     
     return (
       <div className="flex flex-col h-full bg-bg">
@@ -87,25 +91,50 @@ export default function PricesScreen({ setActiveScreen }) {
           <div className="bg-card border border-border rounded-3xl p-6 shadow-sm space-y-6">
             <div className="flex justify-between items-center">
               <h3 className="font-bold text-dark">Price History</h3>
-              <span className="text-light text-[10px] font-bold uppercase tracking-widest">Last 7 Days</span>
+              <div className="flex bg-bg rounded-lg p-1 border border-border">
+                <button 
+                  onClick={() => setTimeRange('7d')}
+                  className={`px-3 py-1 text-[10px] font-bold rounded-md transition-all ${
+                    timeRange === '7d' ? 'bg-primary text-white shadow-sm' : 'text-light'
+                  }`}
+                >
+                  7D
+                </button>
+                <button 
+                  onClick={() => setTimeRange('30d')}
+                  className={`px-3 py-1 text-[10px] font-bold rounded-md transition-all ${
+                    timeRange === '30d' ? 'bg-primary text-white shadow-sm' : 'text-light'
+                  }`}
+                >
+                  30D
+                </button>
+              </div>
             </div>
             
             {/* Simple Bar Chart */}
-            <div className="h-40 flex items-end justify-between gap-2 pt-4">
-              {selectedCrop.history.map((val, idx) => (
+            <div className="h-40 flex items-end justify-between gap-1 pt-4">
+              {historyData.map((val, idx) => (
                 <div key={idx} className="flex-1 flex flex-col items-center gap-2 group">
                   <div 
-                    className={`w-full rounded-t-lg transition-all duration-500 ${
-                      idx === 6 ? 'bg-primary shadow-[0_0_12px_rgba(45,106,79,0.3)]' : 'bg-primary/20'
+                    className={`w-full rounded-t-[2px] transition-all duration-500 ${
+                      idx === historyData.length - 1 ? 'bg-primary shadow-[0_0_12px_rgba(45,106,79,0.3)]' : 'bg-primary/20'
                     }`}
                     style={{ height: `${(val / maxVal) * 100}%` }}
                   ></div>
-                  <span className={`text-[8px] font-bold ${idx === 6 ? 'text-primary' : 'text-light'}`}>
-                    Day {idx + 1}
-                  </span>
+                  {timeRange === '7d' && (
+                    <span className={`text-[8px] font-bold ${idx === historyData.length - 1 ? 'text-primary' : 'text-light'}`}>
+                      D{idx + 1}
+                    </span>
+                  )}
                 </div>
               ))}
             </div>
+            {timeRange === '30d' && (
+              <div className="flex justify-between text-[8px] font-bold text-light px-1">
+                <span>30 Days Ago</span>
+                <span>Today</span>
+              </div>
+            )}
           </div>
 
           {/* Detailed Stats Grid */}

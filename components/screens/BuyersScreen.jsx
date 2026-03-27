@@ -28,22 +28,30 @@ export default function BuyersScreen({ setActiveScreen }) {
         <div className="w-10"></div>
       </header>
 
-      {/* Map Placeholder */}
+      {/* Map Placeholder with Mockup Image */}
       <section className="h-[180px] bg-[#E8F0E9] relative overflow-hidden border-b border-border shrink-0">
+        <img 
+          src="/map-mockup.png" 
+          alt="Map of Iloilo City" 
+          className="absolute inset-0 w-full h-full object-cover opacity-80"
+          onError={(e) => {
+            e.target.style.display = 'none';
+          }}
+        />
         <div className="absolute inset-0 grid grid-cols-10 grid-rows-10">
           {[...Array(100)].map((_, i) => (
-            <div key={i} className="border-[0.5px] border-white/30"></div>
+            <div key={i} className="border-[0.5px] border-white/20"></div>
           ))}
         </div>
         
-        {/* Pins */}
-        <span className="absolute top-10 left-10 text-2xl animate-bounce">📍</span>
-        <span className="absolute top-24 left-40 text-2xl animate-bounce [animation-delay:0.2s]">📍</span>
-        <span className="absolute top-32 left-10 text-2xl animate-bounce [animation-delay:0.4s]">📍</span>
-        <span className="absolute top-12 left-72 text-2xl animate-bounce [animation-delay:0.6s]">📍</span>
+        {/* Pins - Positioned to look like they are on the map */}
+        <span className="absolute top-8 left-20 text-2xl animate-bounce">📍</span>
+        <span className="absolute top-24 left-44 text-2xl animate-bounce [animation-delay:0.2s]">📍</span>
+        <span className="absolute top-32 left-16 text-2xl animate-bounce [animation-delay:0.4s]">📍</span>
+        <span className="absolute top-14 left-72 text-2xl animate-bounce [animation-delay:0.6s]">📍</span>
         
         {/* Your Location */}
-        <div className="absolute bottom-4 right-4 bg-white px-3 py-1 rounded-full shadow-md flex items-center gap-1.5">
+        <div className="absolute bottom-4 right-4 bg-white px-3 py-1 rounded-full shadow-md flex items-center gap-1.5 border border-border">
           <span className="text-red-500">📍</span>
           <span className="text-[10px] font-bold text-dark">Your location</span>
         </div>

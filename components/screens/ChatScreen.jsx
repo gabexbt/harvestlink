@@ -24,6 +24,14 @@ const responses = [
     reply: "⚠️ Active advisory: Heavy rain warning in Iloilo. Expect transport delays and possible price fluctuations in corn and rice over the next 3–5 days. Consider selling sooner if your produce is ready."
   },
   {
+    keywords: ["hello", "hi", "kumusta", "good morning", "good afternoon", "good evening"],
+    reply: "Hello! I'm your HarvestLink AI assistant. How can I help you today? You can ask me about crop prices, find buyers, or check weather advisories in Iloilo."
+  },
+  {
+    keywords: ["help", "tulong", "can you help", "ano magagawa"],
+    reply: "I can help you with:\n• Checking current crop prices in Iloilo\n• Finding verified buyers near your location\n• Getting weather and market advisories\n\nTry asking: 'How much are tomatoes today?' or 'Who buys mangoes near me?'"
+  },
+  {
     default: "I can help you with crop prices, finding buyers, and weather advisories in Iloilo. Try asking: 'What's the price of mango today?' or 'Who can I sell my tomatoes to?'"
   }
 ];
